@@ -6,18 +6,26 @@ import { Report } from '../assets/components/types';
 import { RootState } from '../store/store'; // Importe o tipo RootState
 import { useDispatch, useSelector } from 'react-redux';
 import { overwriteReports } from '../features/ReportSlice';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
 const ReportListPage = () => {
   const [searchValue, setSearchValue] = useState('');
   const dispatch = useDispatch();
   const reports = useSelector((state: RootState) => state.report.reports);
-  
+  const navigate = useNavigate();
+
   const fetchReports = async (filter = '') => {
     try {
       const response: Report[] = await getReports(filter);
-      dispatch(overwriteReports(response)); // Use a ação do Redux para sobrescrever os relatórios
+      dispatch(overwriteReports(response));
     } catch (err) {
+      if (axios.isAxiosError(err)) {
+        if (err.response?.status === 401 || err.response?.status === 500) {
+          navigate("/login");
+        }
+      }
       console.log(err);
     }
   };
@@ -31,7 +39,7 @@ const ReportListPage = () => {
   }, [searchValue]);
 
   useEffect(() => {
-    fetchReports(); 
+    fetchReports();
   }, []);
 
   const handleSearchField = (event: any) => {

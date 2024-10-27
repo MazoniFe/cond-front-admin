@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { IoIosPeople } from "react-icons/io";
 import { FaPeopleRoof } from "react-icons/fa6";
 import { HiOutlineDocumentReport } from "react-icons/hi";
@@ -38,6 +38,8 @@ const options: IOptionProps[] = [
 ];
 
 const MenuSideBar = () => {
+  const location = useLocation(); // Obter a localização atual
+
   return (
     <div className="h-full w-full bg-gray-800 text-white flex flex-col">
       <div className="p-4 self-center mt-4">
@@ -45,16 +47,19 @@ const MenuSideBar = () => {
       </div>
       <nav className="mt-10">
         <ul>
-          {options.map((option, index) => (
-            <li key={index} className='px-4 hover:bg-gray-700'>
-              <div className='flex items-center'>
-                <option.icon size={iconSize} /> {/* Usando o ícone da opção */}
-                <Link to={option.path} className="block p-4">
-                  {option.text} {/* O texto da opção */}
-                </Link>
-              </div>
-            </li>
-          ))}
+          {options.map((option, index) => {
+            const isActive = location.pathname === option.path; // Verifica se o caminho atual é o da opção
+            return (
+              <li key={index} className={`px-4 ${isActive ? 'bg-gray-700' : 'hover:bg-gray-700'}`}>
+                <div className='flex items-center'>
+                  <option.icon size={iconSize} />
+                  <Link to={option.path} className={`block p-4 ${isActive ? 'font-bold' : ''}`}>
+                    {option.text}
+                  </Link>
+                </div>
+              </li>
+            );
+          })}
         </ul>
       </nav>
     </div>

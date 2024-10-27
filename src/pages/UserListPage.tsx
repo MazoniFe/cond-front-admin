@@ -9,11 +9,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { overwriteUsers } from '../features/UserSlice';
 import SimpleDialog from '../assets/components/DIalog';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
 const UserListPage = () => {
   const [searchValue, setSearchValue] = useState('');
   const dispatch = useDispatch();
+  const navigate  =  useNavigate();
   const users = useSelector((state: RootState) => state.user.users);
   const [showCreateUserModal, setShowCreateUserModal] = useState(false);
   const [showDeleteUserModal, setShowDeleteUserModal] = useState(false);
@@ -25,7 +28,11 @@ const UserListPage = () => {
       const response: User[] = await getUsers(filter);
       dispatch(overwriteUsers(response));
     } catch (err) {
-      console.log(err);
+      if (axios.isAxiosError(err)) {
+        if (err.response?.status === 401 || err.response?.status === 500) {
+          navigate("/login");
+        }
+      }
     }
   };
 

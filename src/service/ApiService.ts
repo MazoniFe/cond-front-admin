@@ -77,7 +77,12 @@ class ApiService {
   private handleError(error: any): Error {
     if (axios.isAxiosError(error) && error.response) {
       const { status, data } = error.response;
-      console.log(error.response);
+  
+      // Redireciona para /login se o status for 401 (não autorizado) ou 403 (proibido)
+      if (status === 401 || status === 403 || status === 500) {
+        window.location.href = '/';
+      }
+  
       return new Error(`Erro ${status}: ${data}`);
     }
     return new Error('Erro desconhecido ao fazer requisição.');

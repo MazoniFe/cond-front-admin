@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import Spinner from './Spinner';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 interface DialogProps {
     title: string;
@@ -12,6 +14,7 @@ interface DialogProps {
 const SimpleDialog = ({ title, message, onConfirm, onClose }: DialogProps) => {
     const [isVisible, setIsVisible] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
     const handleClose = () => {
         setIsVisible(false);
@@ -21,11 +24,20 @@ const SimpleDialog = ({ title, message, onConfirm, onClose }: DialogProps) => {
     };
 
     const handleConfirm = async () => {
-        setIsLoading(true); 
+        setIsLoading(true);
         try {
-            await onConfirm(); 
-            handleClose(); 
-        } finally {
+            await onConfirm();
+            handleClose();
+        } 
+        catch (err) {
+            if (axios.isAxiosError(err)) {
+                if (err.response?.status === 401 || err.response?.status === 500) {
+                  navigate("/login");
+                }
+                console.log(err.response?.data); 
+              }
+        }
+        finally {
             setIsLoading(false); // Finaliza o loading
         }
     };

@@ -5,18 +5,25 @@ import { getResidents } from '../service/AdminService';
 import { RootState } from '../store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { overwriteResidents } from '../features/ResidentSlice';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const ResidentListPage = () => {
   const [searchValue, setSearchValue] = useState('');
   const dispatch = useDispatch();
   const residents = useSelector((state: RootState) => state.resident.Residents);
+  const navigate = useNavigate();
 
   const fetchResidents = async (filter = '') => {
     try {
       const response = await getResidents(filter);
       dispatch(overwriteResidents(response)); 
     } catch (err) {
-      console.log(err);
+      if (axios.isAxiosError(err)) {
+        if (err.response?.status === 401 || err.response?.status === 500) {
+          navigate("/login");
+        }
+      }
     }
   };
 
