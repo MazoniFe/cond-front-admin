@@ -56,26 +56,28 @@ const ResidentListPage = () => {
           <table className="min-w-full bg-white border border-gray-200">
             <thead>
               <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                <th className="py-3 px-6 text-left">ID</th>
-                <th className="py-3 px-6 text-left">Nome Completo</th>
-                <th className="py-3 px-6 text-left">Email</th>
-                <th className="py-3 px-6 text-left">Apartamento</th>
                 <th className="py-3 px-6 text-left">Torre</th>
-                <th className="py-3 px-6 text-left">Telefone</th>
-                <th className="py-3 px-6 text-left">Veículo</th>
+                <th className="py-3 px-6 text-left">Apartamento</th>
+                <th className="py-3 px-6 text-left">Nome Completo</th>
+                <th className="py-3 px-6 text-left">Telefone 1</th>
+                <th className="py-3 px-6 text-left">Telefone 2</th>
+                <th className="py-3 px-6 text-left">Vaga</th>
+                <th className="py-3 px-6 text-left">Veículos</th>
+                <th className="py-3 px-6 text-left">Email</th>
                 <th className="py-3 px-6 text-left">Data de Atualização</th>
               </tr>
             </thead>
             <tbody className="text-gray-600 text-sm font-light">
               {residents.map((resident) => (
                 <tr key={resident.id} className="border-b border-gray-200 hover:bg-gray-100">
-                  <td className="py-3 px-6 text-left">{resident.id}</td>
-                  <td className="py-3 px-6 text-left">{resident.fullName}</td>
-                  <td className="py-3 px-6 text-left">{resident.resident_email}</td>
-                  <td className="py-3 px-6 text-left">{resident.apartment}</td>
                   <td className="py-3 px-6 text-left">{resident.tower}</td>
+                  <td className="py-3 px-6 text-left">{resident.apartment}</td>
+                  <td className="py-3 px-6 text-left">{resident.fullName}</td>
                   <td className="py-3 px-6 text-left">{resident.phoneNumber}</td>
-                  <td className="py-3 px-6 text-left">{resident.hasVehicle === 'yes' ? resident.vehiclePlates : 'N/A'}</td>
+                  <td className="py-3 px-6 text-left">{resident.spousePhoneNumber}</td>
+                  <td className="py-3 px-6 text-left">{resident.parkingSpot}</td>
+                  <td className="py-3 px-6 text-left">{resident.hasVehicle === 'yes' ? resident.vehiclePlates : ''}</td>
+                  <td className="py-3 px-6 text-left">{resident.resident_email}</td>
                   <td className="py-3 px-6 text-left">{resident.updateDate}</td>
                 </tr>
               ))}
