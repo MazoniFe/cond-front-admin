@@ -1,25 +1,20 @@
 import { useEffect, useState } from 'react';
 import SearchInput from '../assets/components/SearchInput';
 import { debounce } from 'lodash';
-import { getResidents, getUsers } from '../service/AdminService';
+import { getUsers } from '../service/AdminService';
 import { User } from '../assets/components/types';
 
 const UserListPage = () => {
   const [searchValue, setSearchValue] = useState('');
   const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   const fetchUsers = async (filter = '') => {
-    setLoading(true);
     try {
       const response : User[] = await getUsers(filter);
       setUsers(response);
     } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+      console.log(err);
+    } 
   };
 
   const debouncedFetchUsers = debounce((filter: string) => {

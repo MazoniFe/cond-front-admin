@@ -1,23 +1,19 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import SearchInput from '../assets/components/SearchInput';
 import { debounce } from 'lodash';
 import { getResidents } from '../service/AdminService';
+import { Resident } from '../assets/components/types';
 
 const ResidentListPage = () => {
   const [searchValue, setSearchValue] = useState('');
-  const [residents, setResidents] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [residents, setResidents] =useState<Resident[]>([])
 
   const fetchResidents = async (filter = '') => {
-    setLoading(true);
     try {
       const response = await getResidents(filter);
       setResidents(response);
     } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+      console.log(err);
     }
   };
 
@@ -33,11 +29,10 @@ const ResidentListPage = () => {
     fetchResidents(); 
   }, []);
 
-  const handleSearchField = (event) => {
+  const handleSearchField = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setSearchValue(value);
-  };
-
+};
   return (
     <div className="mx-auto px-4 mt-8">
       <div className='flex items-center mb-4'>

@@ -1,11 +1,21 @@
-const Spinner = ({ size = 'medium', color = 'blue' }) => {
-    const sizeClasses = {
+import React from 'react';
+
+type Size = 'small' | 'medium' | 'large';
+type Color = 'blue' | 'red' | 'green' | 'yellow' | 'white';
+
+interface SpinnerProps {
+    size?: Size;
+    color?: Color;
+}
+
+const Spinner: React.FC<SpinnerProps> = ({ size = 'medium', color = 'blue' }) => {
+    const sizeClasses: Record<Size, string> = {
         small: 'h-4 w-4',
         medium: 'h-8 w-8',
         large: 'h-12 w-12',
     };
 
-    const colorClasses = {
+    const colorClasses: Record<Color, string> = {
         blue: 'text-blue-500',
         red: 'text-red-500',
         green: 'text-green-500',
@@ -28,3 +38,4 @@ const Spinner = ({ size = 'medium', color = 'blue' }) => {
 };
 
 export default Spinner;
+

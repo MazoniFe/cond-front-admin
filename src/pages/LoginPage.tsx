@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import {useEffect, useState, FormEvent } from 'react';
 import Spinner from '../assets/components/Spinner';
 import doLogin from '../service/UserService';
 import { loginResponse } from '../assets/components/types';
@@ -11,7 +11,7 @@ const LoginPage = () => {
   const [isSubmitDisabled, setSubmitisDisabled] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     setSubmitisDisabled(true);

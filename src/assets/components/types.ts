@@ -62,8 +62,14 @@ export interface User {
     email: string;
 }
 
+export interface loginResponse {
+    message: string;
+    token: string;
+}
 
-export interface Pageable {
+
+export interface Pageable<T> {
+    content: T[];
     pageNumber: number;
     pageSize: number;
     sort: {
@@ -78,7 +84,7 @@ export interface Pageable {
 
 export interface ResponseData {
     content: Resident[];
-    pageable: Pageable;
+    pageable: Pageable<unknown>;
     totalPages: number;
     totalElements: number;
     last: boolean;
@@ -87,12 +93,4 @@ export interface ResponseData {
     numberOfElements: number;
     first: boolean;
     empty: boolean;
-}
-
-
-export interface loginResponse {
-    statusCode: number;
-    status: string;
-    token: string;
-    message: string;
 }
