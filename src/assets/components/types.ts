@@ -60,6 +60,21 @@ export interface User {
     firstName: string;
     lastName: string;
     email: string;
+};
+export interface InsertUserDTO {
+    firstName: string;
+    lastName: string;
+    email: string;
+    userType: 'SUPER_ADMIN' | 'ADMIN' | 'DEFAULT';
+    password: string;
+}
+
+export interface Report {
+    id: number;
+    user: User;
+    action: "CREATE" | "UPDATE" | "DELETE" | "IMPERSONATE";
+    beforeAction: string;
+    afterAction: string;
 }
 
 export interface loginResponse {

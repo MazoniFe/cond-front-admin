@@ -2,16 +2,19 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import SearchInput from '../assets/components/SearchInput';
 import { debounce } from 'lodash';
 import { getResidents } from '../service/AdminService';
-import { Resident } from '../assets/components/types';
+import { RootState } from '../store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { overwriteResidents } from '../features/ResidentSlice';
 
 const ResidentListPage = () => {
   const [searchValue, setSearchValue] = useState('');
-  const [residents, setResidents] =useState<Resident[]>([])
+  const dispatch = useDispatch();
+  const residents = useSelector((state: RootState) => state.resident.Residents);
 
   const fetchResidents = async (filter = '') => {
     try {
       const response = await getResidents(filter);
-      setResidents(response);
+      dispatch(overwriteResidents(response)); 
     } catch (err) {
       console.log(err);
     }
@@ -35,9 +38,9 @@ const ResidentListPage = () => {
 };
   return (
     <div className="mx-auto px-4 mt-8">
-      <div className='flex items-center mb-4'>
-        <h1 className="text-3xl font-bold mr-4">Lista de Residentes</h1>
-        <div className="relative mb-3" data-twe-input-wrapper-init>
+      <div className='flex items-center justify-between mb-4'>
+        <h1 className="text-3xl font-bold">Moradores</h1>
+        <div className="relative" data-twe-input-wrapper-init>
           <SearchInput value={searchValue} onChange={handleSearchField} />
         </div>
       </div>

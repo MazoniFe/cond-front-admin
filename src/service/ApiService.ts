@@ -5,7 +5,7 @@ class ApiService {
 
   
   constructor(baseURL: string = "https://144.91.91.131:8654") {
-  //constructor(baseURL: string = "http://localhost:8080") {
+  // constructor(baseURL: string = "http://localhost:8080") {
     this.api = axios.create({
       baseURL,
       headers: {
@@ -23,7 +23,6 @@ class ApiService {
     headers?: Record<string, string>
   ): Promise<T> {
     try {
-      // Cria a configuração da requisição, incluindo params e headers
       const config: AxiosRequestConfig = {
         params,
         headers,
@@ -36,17 +35,23 @@ class ApiService {
     }
   }
 
-  // Método POST
-  public async post<T>(url: string, data: unknown): Promise<T> {
+  public async post<T>(
+    url: string,
+    data: unknown,
+    headers?: Record<string, string>
+  ): Promise<T> {
     try {
-      const response: AxiosResponse<T> = await this.api.post<T>(url, data);
-      return response.data; // Retorna apenas os dados
+      const config: AxiosRequestConfig = {
+        headers,
+      };
+  
+      const response: AxiosResponse<T> = await this.api.post<T>(url, data, config);
+      return response.data; 
     } catch (error) {
       throw this.handleError(error);
     }
   }
 
-  // Método PUT
   public async put<T>(url: string, data: unknown): Promise<T> {
     try {
       const response: AxiosResponse<T> = await this.api.put<T>(url, data);
@@ -56,17 +61,19 @@ class ApiService {
     }
   }
 
-  // Método DELETE
-  public async delete<T>(url: string): Promise<T> {
+  public async delete<T>(url: string, headers?: Record<string, string>): Promise<T> {
     try {
-      const response: AxiosResponse<T> = await this.api.delete<T>(url);
-      return response.data; // Retorna apenas os dados
+      const config: AxiosRequestConfig = {
+        headers,
+      };
+  
+      const response: AxiosResponse<T> = await this.api.delete<T>(url, config);
+      return response.data;
     } catch (error) {
       throw this.handleError(error);
     }
   }
 
-  // Tratamento de erros
   private handleError(error: any): Error {
     if (axios.isAxiosError(error) && error.response) {
       const { status, data } = error.response;
