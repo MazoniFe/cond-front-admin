@@ -34,6 +34,8 @@ const LoginPage = () => {
 
   useEffect(() => {
     localStorage.removeItem("token");
+    localStorage.removeItem("fullName");
+    localStorage.removeItem("access");
   }, []);
 
 

@@ -60,7 +60,10 @@ export interface User {
     firstName: string;
     lastName: string;
     email: string;
+    accessType: 'SUPER_ADMIN' | 'ADMIN' | 'DEFAULT';
 };
+
+
 export interface InsertUserDTO {
     firstName: string;
     lastName: string;
@@ -80,6 +83,7 @@ export interface Report {
 export interface loginResponse {
     message: string;
     token: string;
+    user: User
 }
 
 

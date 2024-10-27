@@ -50,7 +50,7 @@ const ReportListPage = () => {
   return (
     <div className="mx-auto px-4 mt-8">
       <div className='flex items-center justify-between mb-4'>
-        <h1 className="text-3xl font-bold">Usuários</h1>
+        <h1 className="text-3xl font-bold">Relatório</h1>
         <div className="relative" data-twe-input-wrapper-init>
           <SearchInput value={searchValue} onChange={handleSearchField} />
         </div>
