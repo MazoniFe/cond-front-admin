@@ -4,7 +4,7 @@ class ApiService {
   private api: AxiosInstance;
 
   
-  constructor(baseURL: string = "https://144.91.91.131:8654") {
+  constructor(baseURL: string = "https://api.camposdosul.com.br:8654") {
   // constructor(baseURL: string = "http://localhost:8080") {
     this.api = axios.create({
       baseURL,
